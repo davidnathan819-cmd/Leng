@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#8f4f69">
+  <title>GlamBook | Salon Appointment System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="GlamBook home"><span class="brand-mark">G</span><span>GlamBook<small>SALON APPOINTMENTS</small></span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+    <nav id="mainNav">
+      <button class="nav-link active" data-view="home">Home</button>
+      <button class="nav-link" data-view="book">Book Appointment</button>
+      <button class="nav-link" data-view="records">My Bookings</button>
+      <button class="nav-link" data-view="admin">Admin</button>
+      <button class="nav-link" data-view="about">About</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="view active" id="homeView">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">YOUR BEAUTY, YOUR TIME</p>
+          <h1>A little time for<br><em>you.</em></h1>
+          <p>Book your next salon visit with ease. Choose a service, pick a schedule, and let us take care of the rest.</p>
+          <button class="btn btn-light" data-go="book">Book an appointment <span>→</span></button>
+        </div>
+        <div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="art-card"><span>G</span><b>Feel good.<br>Look good.</b><small>YOUR MOMENT STARTS HERE</small></div></div>
+      </div>
+      <div class="section-heading"><div><p class="eyebrow">OUR SERVICES</p><h2>Made for your moment</h2></div><button class="text-btn" data-go="book">See all services →</button></div>
+      <div class="service-grid" id="homeServices"></div>
+      <div class="how-section"><p class="eyebrow">SIMPLE AND EASY</p><h2>Your appointment in 3 steps</h2><div class="steps"><article><span>01</span><h3>Choose a service</h3><p>Find the salon service that fits your needs.</p></article><article><span>02</span><h3>Pick a schedule</h3><p>Select an available date and time slot.</p></article><article><span>03</span><h3>Confirm your booking</h3><p>Save your reference number and booking details.</p></article></div></div>
+    </section>
+
+    <section class="view page-view" id="bookView">
+      <div class="page-heading"><p class="eyebrow">LET'S GET YOU BOOKED</p><h1>Book an appointment</h1><p>Complete the form below. Fields marked * are required.</p></div>
+      <div class="form-layout">
+        <form class="panel booking-form" id="bookingForm" novalidate>
+          <h2>Your details</h2>
+          <div class="form-grid">
+            <label>Full name *<input id="customerName" name="customerName" autocomplete="name" required maxlength="70" placeholder="e.g. Alex Santos"></label>
+            <label>Phone number *<input id="customerPhone" name="customerPhone" type="tel" autocomplete="tel" required maxlength="20" placeholder="09XXXXXXXXX"></label>
+            <label class="full">Email address <input id="customerEmail" name="customerEmail" type="email" autocomplete="email" maxlength="100" placeholder="you@example.com"></label>
+            <label>Choose a service *<select id="serviceSelect" required><option value="">Select a service</option></select></label>
+            <label>Appointment date *<input id="appointmentDate" type="date" required></label>
+            <label class="full">Available time *<select id="timeSelect" required><option value="">Choose a date first</option></select></label>
+            <label class="full">Notes (optional)<textarea id="bookingNotes" rows="3" maxlength="300" placeholder="Any requests or additional information?"></textarea></label>
+          </div>
+          <div class="form-actions"><button class="btn btn-primary" type="submit">Confirm appointment</button><button class="btn btn-ghost" type="reset" id="resetBooking">Clear form</button></div>
+          <p class="form-note">Demo system only: no online payment or SMS/email notification is processed.</p>
+        </form>
+        <aside class="panel booking-summary"><p class="eyebrow">BOOKING SUMMARY</p><h2>Your visit</h2><div id="liveSummary" class="summary-content"><p class="muted">Choose a service and date to preview your appointment.</p></div><div class="summary-rule"></div><p class="muted small">Your appointment will be saved in this browser on this device.</p></aside>
+      </div>
+    </section>
+
+    <section class="view page-view" id="recordsView">
+      <div class="page-heading"><p class="eyebrow">YOUR APPOINTMENTS</p><h1>My bookings</h1><p>Search using your name, phone number, or booking reference.</p></div>
+      <div class="toolbar panel"><input id="recordSearch" type="search" placeholder="Search bookings..."><select id="recordStatus"><option value="all">All statuses</option><option>Pending</option><option>Confirmed</option><option>Completed</option><option>Cancelled</option></select></div>
+      <div id="recordsList" class="records-list"></div>
+    </section>
+
+    <section class="view page-view" id="adminView">
+      <div class="page-heading"><p class="eyebrow">SALON MANAGEMENT</p><h1>Admin dashboard</h1><p>Manage appointments and salon services in this browser.</p></div>
+      <div id="adminLogin" class="panel login-panel"><h2>Admin sign in</h2><p class="muted">Use the demo account provided in the README.</p><form id="loginForm"><label>Username<input id="adminUser" required autocomplete="username"></label><label>Password<input id="adminPass" type="password" required autocomplete="current-password"></label><button class="btn btn-primary" type="submit">Sign in</button><p id="loginError" class="error-text" role="alert"></p></form></div>
+      <div id="adminPanel" hidden>
+        <div class="admin-top"><div class="stats-grid" id="adminStats"></div><button class="btn btn-ghost" id="logoutBtn">Log out</button></div>
+        <div class="admin-tabs"><button class="admin-tab active" data-admin-tab="appointments">Appointments</button><button class="admin-tab" data-admin-tab="services">Services</button></div>
+        <div id="adminAppointments" class="panel admin-content"><div class="table-heading"><div><h2>Appointment records</h2><p class="muted small">Update status or remove a record.</p></div><input id="adminSearch" type="search" placeholder="Search appointments..."></div><div class="table-wrap"><table><thead><tr><th>Reference / Customer</th><th>Service</th><th>Date & time</th><th>Status</th><th>Actions</th></tr></thead><tbody id="adminAppointmentRows"></tbody></table></div><div id="adminEmpty" class="empty-state" hidden>No appointment records yet.</div></div>
+        <div id="adminServices" class="panel admin-content" hidden><div class="table-heading"><div><h2>Manage services</h2><p class="muted small">Add, edit, or remove salon services.</p></div></div><form id="serviceForm" class="service-editor"><input type="hidden" id="editServiceId"><label>Service name<input id="newServiceName" required maxlength="60" placeholder="e.g. Hair treatment"></label><label>Price (₱)<input id="newServicePrice" type="number" required min="1" max="100000" step="1" placeholder="500"></label><label>Duration (minutes)<input id="newServiceDuration" type="number" required min="10" max="600" step="5" value="60"></label><label>Description<input id="newServiceDescription" maxlength="140" placeholder="Short service description"></label><div class="editor-actions"><button class="btn btn-primary" type="submit" id="serviceSaveBtn">Add service</button><button class="btn btn-ghost" type="button" id="serviceCancelEdit" hidden>Cancel edit</button></div></form><div id="serviceAdminList" class="service-admin-list"></div></div>
+      </div>
+    </section>
+
+    <section class="view page-view" id="aboutView">
+      <div class="page-heading"><p class="eyebrow">ABOUT GLAMBOOK</p><h1>Beauty appointments,<br><em>made simple.</em></h1><p>GlamBook is a front-end salon appointment management prototype created for learning and demonstration.</p></div>
+      <div class="about-grid"><article class="panel"><h2>For customers</h2><p>Browse services, create an appointment, view saved booking details, and cancel a booking when needed.</p></article><article class="panel"><h2>For salon staff</h2><p>Use the admin dashboard to review appointments, update booking statuses, and maintain the service list.</p></article><article class="panel"><h2>Important information</h2><p>This project uses browser LocalStorage. Records are limited to the browser and device where they were created. It does not sync between different devices and does not process real payments.</p></article></div>
+    </section>
+  </main>
+
+  <footer><a class="brand footer-brand" href="#"><span class="brand-mark">G</span><span>GlamBook<small>SALON APPOINTMENTS</small></span></a><p>© <span id="year"></span> GlamBook. Front-end project prototype.</p></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="detailDialog" class="detail-dialog"><div class="dialog-head"><h2>Booking details</h2><button class="icon-btn" id="closeDialog" aria-label="Close">×</button></div><div id="dialogContent"></div></dialog>
+  <script src="script.js"></script>
+</body>
+</html>
